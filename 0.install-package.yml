@@ -1,0 +1,52 @@
+---
+- hosts: client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks:
+  - name: "Install epel-release"
+    yum: name={{item}} state=present
+    with_items:
+    - epel-release
+
+  - name: "Install Packages"
+    yum: name={{item}} state=present
+    with_items:
+    - vim-enhanced
+    - wget
+    - lrzsz
+    - gcc-c++
+    - openssl-devel
+    - pcre-devel
+    - zlib-devel
+    - libselinux-python
+    - glibc
+    - make
+    - cmake
+    - zlib
+    - zip
+    - htop
+    - axel
+    - curl
+    - telnet
+    - ntp
+    - mlocate
+
+#Centos 7
+    - net-tools #centos7
+    - psmisc #centos7 (killall)
+    - iptables-services #centos7
+
+#web
+#    - php-fpm php-mysql
+#    - 
+#    - 
+#    - 
+#    - 
+
+  - name: "Groupinstall Libraries"
+    shell: yum -y groupinstall 'Development Libraries' 'Development Tools'
+
+

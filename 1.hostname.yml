@@ -1,0 +1,26 @@
+---
+- hosts : client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars:
+  - host: ansible #according to your needs
+
+  tasks :
+  - name : Changed hostname & /etc/sysconfig/network
+    shell : hostname
+  - command: ip a
+  - hostname: name={{host}}{{ ansible_default_ipv4.address.split('.')[-1] }}
+  
+  - name: Write in /etc/hosts
+    lineinfile:
+      dest: /etc/hosts
+      regexp: '^127\.0\.0\.1'
+      line: "127.0.0.1 {{host}}{{ ansible_default_ipv4.address.split('.')[-1] }}"
+
+  - lineinfile:
+      dest: /etc/hosts
+      regexp: '^::1'
+      line: "::1 {{host}}{{ ansible_default_ipv4.address.split('.')[-1] }}"
+

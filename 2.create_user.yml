@@ -1,0 +1,23 @@
+---
+- hosts: client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars_files:
+  - /etc/ansible/roles/vars/main.yml
+
+  tasks:
+  - name: add OM users
+    user: name={{item}} state=present
+    with_items: "{{OM}}"
+
+  - name: create omse group
+    group: name={{item}} state=present gid=520
+    with_items:
+     - omse
+
+  - name: add omse users
+    user: name={{item}} state=present group={{item}} createhome=no uid=520 shell=/sbin/nologin
+    with_items:
+     - omse

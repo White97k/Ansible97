@@ -1,0 +1,26 @@
+---
+- hosts : client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks :
+  - name: Write in /etc/security/limits.conf
+    lineinfile:
+      dest: /etc/security/limits.conf
+      regexp: 'EOF'
+      insertafter: 'EOF'
+      line: '*          soft          nofile          500000'
+  - lineinfile:
+      dest: /etc/security/limits.conf
+      regexp: 'EOF'
+      insertafter: 'EOF'
+      line: '*          hard          nofile          500000'
+
+  - name: Write in /etc/pam.d/login
+    lineinfile:
+      dest: /etc/pam.d/login
+      regexp: 'EOF'
+      insertafter: 'EOF'
+      line: 'session   required    pam_limits.so'

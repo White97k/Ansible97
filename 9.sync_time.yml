@@ -1,0 +1,19 @@
+---
+- hosts: client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks:
+  - name: Sync time
+    command: timedatectl set-timezone Asia/Shanghai #according to your needs
+  - command: timedatectl set-local-rtc 1
+  - command: hwclock --systohc --localtime
+  - command: timedatectl set-ntp yes
+
+
+#timedatectl status                                                #check time date now
+#timedatectl list-timezones                                        #check the zone-lists
+#timedatectl list-timezones | grep -E "Asia/S.*"                   #Asia-lists
+

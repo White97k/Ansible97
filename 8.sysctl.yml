@@ -1,0 +1,117 @@
+---
+- hosts : client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks :
+  - name: Write in /etc/sysctl.conf,/usr/lib/sysctl.d/50-default.conf
+    lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_syncookies = 1'
+
+  - lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: 'EOF'
+      insertafter: 'EOF'
+      line: 'net.ipv4.tcp_synack_retries = 2'
+
+  - lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_tw_reuse = 1'
+
+  - lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_tw_recycle = 1'
+
+  - lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_fin_timeout = 30'
+
+  - lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_keepalive_time = 1800'
+
+  - lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_max_syn_backlog = 8192'
+
+  - lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'vm.swappiness = 0'
+
+  - lineinfile:
+      dest: /etc/sysctl.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'fs.file-max = 2097152'
+
+#/usr/lib/sysctl.d/50-default.conf
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_syncookies = 1'
+
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: 'EOF'
+      insertafter: 'EOF'
+      line: 'net.ipv4.tcp_synack_retries = 2'
+
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_tw_reuse = 1'
+
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_tw_recycle = 1'
+
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_fin_timeout = 30'
+
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_keepalive_time = 1800'
+
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'net.ipv4.tcp_max_syn_backlog = 8192'
+
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'vm.swappiness = 0'
+
+  - lineinfile:
+      dest: /usr/lib/sysctl.d/50-default.conf
+      regexp: '^EOF'
+      insertafter: '^EOF'
+      line: 'fs.file-max = 2097152'

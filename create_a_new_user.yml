@@ -1,0 +1,11 @@
+---
+# EDIT THE "NAME" IF USER YOU WANT TO CREATE
+
+- hosts: client
+  gather_facts: no
+  tasks:
+  - name: add OM users
+    user: name={{item}} state=present
+    with_items: 
+    - NAME
+

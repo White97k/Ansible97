@@ -1,0 +1,30 @@
+---
+- hosts: client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars_files:
+  - /etc/ansible/roles/vars/main.yml
+
+  tasks:
+  - name: Create .ssh
+    file:
+      path: /home/{{item}}/.ssh
+      owner: "{{item}}"
+      group: "{{item}}"
+      mode: 0600
+      state: directory
+    with_items: "{{OM}}"
+
+  - name: Copy ssh_keys to client server
+    copy: src=/home/{{item}}/.ssh/authorized_keys dest=/home/{{item}}/.ssh/authorized_keys
+    with_items: "{{OM}}" 
+
+  - name: Change mode on authorized_keys
+    file:
+      path: /home/{{item}}/.ssh/authorized_keys
+      owner: "{{item}}"
+      group: "{{item}}"
+      mode: 0400
+    with_items: "{{OM}}"

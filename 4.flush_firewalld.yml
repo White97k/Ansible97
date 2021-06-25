@@ -1,0 +1,11 @@
+---
+- hosts: client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks:
+  - name: Flush default iptables
+    shell: 'systemctl stop firewalld'
+  - command: 'systemctl disable firewalld'

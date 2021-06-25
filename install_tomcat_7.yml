@@ -1,0 +1,25 @@
+---
+- hosts: client
+  remote_user: root
+  vars:
+  - tomcat: apache-tomcat-7.0.91
+  - jdk_env: JAVA_HOME=/opt/jdk export JAVA_HOME CLASSPATH=.:$JAVA_HOME/lirootb:$JAVA_HOME/jre/lib export CLASSPATH JRE=$JAVA_HOME/jre export JRE PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH export PATH
+
+  tasks:
+  - name: 'Install Tomcat_7 lastest'
+    get_url:
+      url: http://apache.fayea.com/tomcat/tomcat-7/v7.0.91/bin/{{tomcat}}.tar.gz
+      dest: /opt
+  - name: 'Unarchive Tomcat_7'
+    unarchive:
+      src: /opt/{{tomcat}}.tar.gz
+      dest: /opt/
+      remote_src: true
+
+  - name: 'Copy JDK from center_server'
+    copy: src=/opt/jdk dest=/opt
+  
+  - name: 'Include the JDK enviroment'
+    lineinfile:
+      dest: /etc/profile
+      line: "{{jdk_env}}"

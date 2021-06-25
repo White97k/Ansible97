@@ -1,0 +1,32 @@
+---
+- hosts: client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars: 
+  - ssh: 22010 #according to your needs
+  - dest: /etc/ssh/sshd_config
+
+  tasks:
+    - name: Changing default hostname
+      lineinfile:
+        dest: "{{dest}}"
+        regexp: '#Port'
+        line: 'Port {{ssh}}'
+
+    - lineinfile:
+        dest: "{{dest}}"
+        regexp: '#PermitRootLogin yes'
+        line: 'PermitRootLogin no'
+   
+    - lineinfile:
+        dest: "{{dest}}"
+        regexp: '#PermitEmptyPasswords no'
+        line: 'PermitEmptyPasswords no'
+
+
+    - lineinfile:
+        dest: "{{dest}}"
+        regexp: 'PasswordAuthentication yes'
+        line: 'PasswordAuthentication no'

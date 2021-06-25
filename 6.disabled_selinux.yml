@@ -1,0 +1,13 @@
+---
+- hosts: client
+  user: white
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  tasks:
+  - name: seline modify enforcing
+    lineinfile:
+     dest: /etc/sysconfig/selinux
+     regexp: '^SELINUX='
+     line: 'SELINUX=disabled'
